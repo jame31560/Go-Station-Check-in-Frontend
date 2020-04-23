@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import VueAnalytics from "vue-analytics";
+import vueaxios from "vue-axios";
+import axios from "axios";
 
 Vue.config.productionTip = false;
 
@@ -14,6 +16,8 @@ Vue.use(VueAnalytics, {
     pageviewOnLoad: false,
   },
 });
+
+Vue.use(vueaxios, axios);
 
 new Vue({
   router,
