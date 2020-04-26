@@ -6,21 +6,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    is_login: true,
+    isLogin: true,
     token: "",
   },
   plugins: [createPersistedState()],
   mutations: {
     SET_AUTH(state, options) {
       state.token = options.token;
-      state.is_login = options.is_login;
+      state.isLogin = options.isLogin;
     },
   },
   actions: {
     setAuth(context, options) {
       context.commit("SET_AUTH", {
         token: options.token,
-        is_login: options.is_login,
+        isLogin: options.isLogin,
       });
     },
   },

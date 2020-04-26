@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <h1>登入</h1>
     <hr />
 
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm.vue";
+  import LoginForm from "@/components/LoginForm.vue";
 
-export default {
-  components: {
-    LoginForm,
-  },
-  mounted() {},
-};
+  export default {
+    components: {
+      LoginForm
+    },
+    mounted() {}
+  };
 </script>
