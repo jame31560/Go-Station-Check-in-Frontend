@@ -2,17 +2,11 @@
   <div class="card">
     <div class="card-body">
       <form @submit.prevent="login">
-        <div
-          class="alert alert-danger"
-          v-if="error"
-        >
-          {{msg}}
+        <div class="alert alert-danger" v-if="error">
+          {{ msg }}
         </div>
-        <div
-          class="alert alert-primary"
-          v-if="prop_msg"
-        >
-          {{prop_msg}}
+        <div class="alert alert-primary" v-if="prop_msg">
+          {{ prop_msg }}
         </div>
         <div class="form-group">
           <label for="emailInput">電子信箱</label>
@@ -44,16 +38,10 @@
           </router-link> -->
         </p>
         <p class="text-center">
-          <router-link
-            to="/register"
-            class="btn btn-link"
-          >
+          <router-link to="/register" class="btn btn-link">
             還沒有帳號?點我註冊
           </router-link>
-          <button
-            type="submit"
-            class="btn btn-primary mr-2"
-          >
+          <button type="submit" class="btn btn-primary mr-2">
             登入
           </button>
         </p>
@@ -63,78 +51,78 @@
 </template>
 
 <script>
-  export default {
-    name: "LoginForm",
-    props: ["prop_msg"],
-    data() {
-      return {
-        error: false,
-        msg: "",
-        email: "",
-        password: ""
-      };
+export default {
+  name: "LoginForm",
+  props: ["prop_msg"],
+  data() {
+    return {
+      error: false,
+      msg: "",
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
     },
-    computed: {
-      isLogin() {
-        return this.$store.state.isLogin;
-      }
-    },
-    methods: {
-      login() {
-        if (this.username == "" || this.password == "") {
-          this.error = true;
-          this.msg = "帳號及密碼不得空白";
-        } else {
-          this.$http
-            .post("http://192.168.1.102:5000/login", {
-              email: this.email,
-              password: this.password,
-              keep_login: true
-            })
-            .then(
-              res => {
-                this.$store.commit("SET_AUTH", {
-                  token: res.data.access_token,
-                  isLogin: true
-                });
-                this.error = false;
-                this.msg = "";
-                this.$router.replace("/");
-              },
-              err => {
-                this.error = true;
-                this.msg = err.response.data.msg;
-              }
-            );
+  },
+  methods: {
+    login() {
+      if (this.username == "" || this.password == "") {
+        this.error = true;
+        this.msg = "帳號及密碼不得空白";
+      } else {
+        this.$http
+          .post("http://192.168.1.102:5000/login", {
+            email: this.email,
+            password: this.password,
+            keep_login: true,
+          })
+          .then(
+            (res) => {
+              this.$store.commit("SET_AUTH", {
+                token: res.data.access_token,
+                isLogin: true,
+              });
+              this.error = false;
+              this.msg = "";
+              this.$router.replace("/");
+            },
+            (err) => {
+              this.error = true;
+              this.msg = err.response.data.msg;
+            }
+          );
 
-          // this.$router.replace("/");
-        }
+        // this.$router.replace("/");
       }
     },
-    mounted() {
-      if (this.isLogin) {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.token}`
-          }
-        };
-        this.$http.defaults.headers.common = {
-          Authorization: `Bearer ${this.$store.state.token}`
-        };
-        this.$http.get("http://192.168.1.102:5000/check_auth").then(
-          res => {
-            this.$router.replace("/");
-          },
-          err => {
-            this.$store.commit("SET_AUTH", {
-              token: "",
-              isLogin: false
-            });
-          }
-        );
-      }
+  },
+  mounted() {
+    if (this.isLogin) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      };
+      this.$http.defaults.headers.common = {
+        Authorization: `Bearer ${this.$store.state.token}`,
+      };
+      this.$http.get("http://192.168.1.102:5000/check_auth").then(
+        (res) => {
+          this.$router.replace("/");
+        },
+        (err) => {
+          this.$store.commit("SET_AUTH", {
+            token: "",
+            isLogin: false,
+          });
+        }
+      );
     }
-  };
+  },
+};
 </script>
 
 <style scoped></style>

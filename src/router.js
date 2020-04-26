@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import ForgetPassword from "./views/ForgetPassword.vue";
+import History from "./views/History.vue";
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: "/forgetpassword",
       name: "ForgetPassword",
       component: ForgetPassword,
+    },
+    {
+      path: "/history",
+      name: "History",
+      component: History,
     },
     {
       path: "*",
